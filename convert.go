@@ -1,6 +1,5 @@
 // Copyright 2020 QINIU. All rights reserved.
 
-// Package car provides helper fuctions for filecoin package car.
 package car
 
 import (
