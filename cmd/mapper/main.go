@@ -4,8 +4,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io"
-	"log"
 	"os"
 )
 
@@ -28,35 +28,35 @@ func main() {
 
 	rawF, err := os.Open(rawFile)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(2)
 	}
 	defer rawF.Close() //nolint:errcheck
 
 	rawS, err := rawF.Stat()
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(2)
 	}
 	if rawS.Size()%blockSize != 0 {
-		log.Println("Wrong raw file size")
+		fmt.Println("Wrong raw file size")
 		os.Exit(2)
 	}
 
 	carF, err := os.Open(carFile)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(3)
 	}
 	defer carF.Close() //nolint:errcheck
 
 	carS, err := carF.Stat()
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(3)
 	}
 	if carS.Size() <= rawS.Size() {
-		log.Println("Wrong car file size")
+		fmt.Println("Wrong car file size")
 		os.Exit(3)
 	}
 
@@ -70,26 +70,26 @@ func main() {
 	for nb := int64(0); nb < blocks; nb++ {
 		_, err := rawF.Seek(nb*blockSize, 0)
 		if err != nil {
-			log.Println(err)
+			fmt.Println(err)
 			os.Exit(4)
 		}
 
 		_, err = io.ReadFull(rawF, unique)
 		if err != nil {
-			log.Println(err)
+			fmt.Println(err)
 			os.Exit(4)
 		}
 
 		for {
 			_, err := carF.Seek(carOffset, 0)
 			if err != nil {
-				log.Println(err)
+				fmt.Println(err)
 				os.Exit(5)
 			}
 
 			_, err = io.ReadFull(carF, block)
 			if err != nil {
-				log.Println(err)
+				fmt.Println(err)
 				os.Exit(5)
 			}
 
@@ -97,7 +97,7 @@ func main() {
 			carOffset = newoff
 
 			if location != 0 {
-				log.Printf("Block %v Location %v\n", nb, location)
+				fmt.Printf("Block %v Location %v\n", nb, location)
 				break
 			}
 		}

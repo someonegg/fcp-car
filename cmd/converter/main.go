@@ -5,7 +5,7 @@ package main
 import (
 	"context"
 	"flag"
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/someonegg/fcp-car"
@@ -26,5 +26,5 @@ func main() {
 	}
 
 	cid, carsz, err := car.FileConvertToCAR(context.Background(), inFile, outFile)
-	log.Println(cid, carsz, err)
+	fmt.Println(cid, carsz, err)
 }
