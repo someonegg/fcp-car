@@ -9,6 +9,7 @@ const (
 	Fcp32G FcpType = "32g"
 )
 
+// FilecoinPackageSize returns required size for the package type.
 func FilecoinPackageSize(t FcpType) int64 {
 	switch t {
 	case Fcp32G:

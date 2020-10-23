@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/someonegg/fcp-car"
+	"github.com/someonegg/fcp-car/convert"
 )
 
 var inFile string
@@ -25,6 +25,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	cid, carsz, err := car.FileConvertToCAR(context.Background(), inFile, outFile)
+	cid, carsz, err := convert.FileConvertToCAR(context.Background(), inFile, outFile)
 	fmt.Println(cid, carsz, err)
 }

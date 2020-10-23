@@ -1,6 +1,7 @@
 // Copyright 2020 QINIU. All rights reserved.
 
-package car
+// Package convert generates filecoin package car.
+package convert
 
 import (
 	"context"
@@ -20,7 +21,7 @@ import (
 	dag "github.com/ipfs/go-merkledag"
 	ibalancer "github.com/ipfs/go-unixfs/importer/balanced"
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
-	icar "github.com/ipld/go-car"
+	car "github.com/ipld/go-car"
 	basicnode "github.com/ipld/go-ipld-prime/node/basic"
 	"github.com/ipld/go-ipld-prime/traversal/selector"
 	"github.com/ipld/go-ipld-prime/traversal/selector/builder"
@@ -271,7 +272,7 @@ func convertToCAR(ctx context.Context, in io.Reader, out io.Writer, noCopy bool)
 	allSelector := ssb.ExploreRecursive(selector.RecursionLimitNone(),
 		ssb.ExploreAll(ssb.ExploreRecursiveEdge())).Node()
 
-	sc := icar.NewSelectiveCar(ctx, blockStore{dagS}, []icar.Dag{{Root: root.Cid(), Selector: allSelector}})
+	sc := car.NewSelectiveCar(ctx, blockStore{dagS}, []car.Dag{{Root: root.Cid(), Selector: allSelector}})
 	if err = sc.Write(out); err != nil {
 		return root.Cid(), carsz, err
 	}
