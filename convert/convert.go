@@ -307,7 +307,16 @@ func FileConvertToCAR(ctx context.Context, inPath, outPath string) (cid.Cid, uin
 	if err != nil {
 		return cid.Undef, 0, err
 	}
-	defer outF.Close() //nolint:errcheck
 
-	return convertToCAR(ctx, inFile, outF, true)
+	cid, carsz, err := convertToCAR(ctx, inFile, outF, true)
+	if err != nil {
+		return cid, carsz, err
+	}
+
+	err = outF.Close()
+	if err != nil {
+		return cid, carsz, err
+	}
+
+	return cid, carsz, nil
 }

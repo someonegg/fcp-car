@@ -26,5 +26,10 @@ func main() {
 	}
 
 	cid, carsz, err := convert.FileConvertToCAR(context.Background(), inFile, outFile)
+
 	fmt.Println(cid, carsz, err)
+
+	if err != nil {
+		os.Exit(2)
+	}
 }
